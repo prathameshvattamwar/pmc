@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Details - Prathamesh Movie Corner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="details.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body{
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+        <div class="btns-box">
+            <button class="btn btn-light" onclick="goHome()">Home</button>
+            <button class="btn btn-light" onclick="goBack()">Back</button>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="ticket">
+            <div class="ticket-header">
+                <h2>Movie Ticket</h2>
+                <span style="font-size: 24px;">🎟️</span>
+            </div>
+            <div class="ticket-body">
+                <div>
+                    <img src="qr.png" alt="QR Code" style="max-width: 180px;">
+                </div>
+                <div>
+                    <div class="ticket-section">
+                        <p class="movie-name" id="movie-name"></p>
+                        <p class="time-seat">
+                            <span>Time: <span id="time-slot"></span></span>
+                            <span class="seat-no">Seat No: <span id="seat-list"></span></span>
+                        </p>
+                        <p class="total-price">Total Price: <span id="total-price"></span> Rs</p>
+                    </div>
+                    <div class="ticket-barcode">
+                        <p class="small-text">
+                            Seats available: <span id="available-seats"></span> | Total seats selected: <span id="seat-count"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ticket-footer">
+                <button class="btn btn-primary mt-3" onclick="proceedToPayment()">Proceed to Pay</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const seatDetails = JSON.parse(localStorage.getItem("seatDetails"));
+            document.getElementById("movie-name").textContent = seatDetails.selectedMovie;
+            document.getElementById("time-slot").textContent = seatDetails.selectedTime;
+            document.getElementById("seat-list").textContent = seatDetails.seatList;
+            document.getElementById("seat-count").textContent = seatDetails.seatCount;
+            document.getElementById("available-seats").textContent = seatDetails.availableSeats;
+            document.getElementById("total-price").textContent = seatDetails.totalCost;
+        });
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        function goBack() {
+            window.location.href = "seat-selection.html";
+        }
+
+        function proceedToPayment() {
+            window.location.href = "payment.html";
+        }
+        
+    </script>
+</body>
+</html>

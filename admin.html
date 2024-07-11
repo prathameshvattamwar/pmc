@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://kit.fontawesome.com/37df75b44e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="PMC_logo_dark.png" alt="PMC Logo" class="logo-image">
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#" id="dashboard-btn"><i class="fas fa-tachometer-alt fa-lg"></i> <span class="nav-text">Dashboard</span></a></li>
+                    <li><a href="#"><i class="fas fa-film fa-lg"></i> <span class="nav-text">Movies</span></a></li>
+                    <li><a href="#"><i class="fas fa-clock fa-lg"></i> <span class="nav-text">Showtimes</span></a></li>
+                    <li><a href="#"><i class="fas fa-ticket-alt fa-lg"></i> <span class="nav-text">Bookings</span></a></li>
+                    <li><a href="#" id="customers-btn"><i class="fas fa-users fa-lg"></i> <span class="nav-text">Customers</span></a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar fa-lg"></i> <span class="nav-text">Reports</span></a></li>
+                    <li><a href="#"><i class="fas fa-cogs fa-lg"></i> <span class="nav-text">Settings</span></a></li>
+                    <li class="mt-auto"><a href="#" id="profile-btn"><i class="fas fa-user fa-lg"></i> <span class="nav-text">Profile</span></a></li>
+                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt fa-lg"></i> <span class="nav-text">Logout</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <div class="menu-icon">
+                    <i class="fas fa-bars fa-2x"></i>
+                </div>
+                <h1>Prathamesh Movie Corner</h1>
+            </header>
+            <section class="content" id="dashboard-content">
+                <p>Welcome to the dashboard</p>
+            </section>
+            <section class="content d-none" id="profile-content">
+                <h2>Profile</h2>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>Prathamesh Vattamwar</td>
+                        </tr>
+                        <tr>
+                            <th>Contact number</th>
+                            <td>xxxxxxxxx</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>prathamesh@gmail.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section class="content d-none" id="customers-content">
+                <h2>Customers</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Movie</th>
+                            <th>Time</th>
+                            <th>Seats</th>
+                            <th>Total Cost</th>
+                            <th>Payment Method</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table-body">
+                        <!-- Booking details will be injected here by JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+
+        document.getElementById("profile-btn").addEventListener("click", () => {
+            document.getElementById("dashboard-content").classList.add("d-none");
+            document.getElementById("customers-content").classList.add("d-none");
+            document.getElementById("profile-content").classList.remove("d-none");
+        });
+
+        document.getElementById("customers-btn").addEventListener("click", () => {
+        document.getElementById("dashboard-content").classList.add("d-none");
+        document.getElementById("profile-content").classList.add("d-none");
+        document.getElementById("customers-content").classList.remove("d-none");
+
+        const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+        const customersTableBody = document.getElementById("customers-table-body");
+        customersTableBody.innerHTML = "";
+
+        bookings.forEach(booking => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${booking.username}</td>
+                <td>${booking.movie}</td>
+                <td>${booking.time}</td>
+                <td>${booking.seats}</td>
+                <td>${booking.totalCost}</td>
+                <td>${booking.paymentMethod}</td>
+                <td>${booking.date}</td>
+            `;
+            customersTableBody.appendChild(row);
+        });
+    });
+
+        document.getElementById("dashboard-btn").addEventListener("click", () => {
+            document.getElementById("profile-content").classList.add("d-none");
+            document.getElementById("customers-content").classList.add("d-none");
+            document.getElementById("dashboard-content").classList.remove("d-none");
+        });
+    </script>
+
+    <script src="checkLoginStatus.js"></script>
+
+</body>
+</html>

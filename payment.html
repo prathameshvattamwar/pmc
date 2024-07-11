@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Prathamesh Movie Corner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+    </nav>
+    <div class="container mt-5">
+        <h1>Payment</h1>
+        <div>
+            <label for="payment-method">Choose payment method:</label>
+            <select id="payment-method" class="form-control" style="max-width: 250px;">
+                <option value="cash">Cash</option>
+                <option value="upi">UPI</option>
+                <option value="credit-card">Credit Card</option>
+            </select>
+        </div>
+        <div class="mt-3">
+            <p>Total Amount: <span id="total-amount"></span> Rs</p>
+            <p>Maintanance: 20 Rs</p>
+            <p>GST (18%): <span id="gst-amount"></span> Rs</p>
+            <p><strong>Total amount to Pay: <span id="amount-to-pay"></span> Rs</strong></p>
+        </div>
+        <button class="btn btn-primary mt-3" onclick="processPayment()">Pay Amount</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            }
+    
+            const seatDetails = JSON.parse(localStorage.getItem("seatDetails"));
+            const totalAmount = seatDetails.totalCost;
+            const maintenanceCharge = 20;
+            const gstAmount = (totalAmount + maintenanceCharge) * 0.18;
+            const amountToPay = totalAmount + maintenanceCharge + gstAmount;
+    
+            document.getElementById("total-amount").textContent = totalAmount;
+            document.getElementById("gst-amount").textContent = gstAmount.toFixed(2);
+            document.getElementById("amount-to-pay").textContent = amountToPay.toFixed(2);
+        });
+    
+        function processPayment() {
+            const seatDetails = JSON.parse(localStorage.getItem("seatDetails"));
+            const paymentMethod = document.getElementById("payment-method").value;
+            const username = localStorage.getItem("loggedInUser");
+            const booking = {
+                username: username,
+                movie: seatDetails.selectedMovie,
+                time: seatDetails.selectedTime,
+                seats: seatDetails.seatList,
+                totalCost: seatDetails.totalCost,
+                paymentMethod: paymentMethod,
+                date: new Date().toLocaleString()
+            };
+    
+            let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+            bookings.push(booking);
+            localStorage.setItem("bookings", JSON.stringify(bookings));
+    
+            // Mark seats as booked
+            let bookedSeats = JSON.parse(localStorage.getItem("bookedSeats")) || {};
+            const timeSlot = seatDetails.selectedTime;
+            if (!bookedSeats[timeSlot]) {
+                bookedSeats[timeSlot] = [];
+            }
+            bookedSeats[timeSlot] = bookedSeats[timeSlot].concat(seatDetails.seatList.split(", "));
+            localStorage.setItem("bookedSeats", JSON.stringify(bookedSeats));
+    
+            // Redirect to confirmation.html after payment
+            window.location.href = "confirmation.html";
+        }
+    </script>
+    
+    
+    
+
+    <script src="checkLoginStatus.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

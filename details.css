@@ -1,0 +1,94 @@
+body {
+    background-color: #333;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.ticket {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+    max-width: 600px;
+    margin: 50px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #000;
+    position: relative;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #000;
+    padding-bottom: 10px;
+}
+
+.ticket-header h2 {
+    font-size: 24px;
+    margin: 5px 0;
+}
+
+.ticket-body {
+    padding: 10px 0;
+    border-bottom: 2px dashed #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-section {
+    text-align: right;
+}
+
+.movie-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.time-seat {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.seat-no {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-price {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d3d3d3;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.ticket-barcode {
+    display: flex;
+    justify-content: right;
+    align-items: start;
+}
+
+.ticket-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.small-text {
+    font-size: 12px;
+    color: #555;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.btns-box {
+    display: flex;
+    gap: 10px;
+}

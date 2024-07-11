@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    background-color: #333;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.container-fluid {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#movie-grid .col-md-3 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    color: #fff;
+}
+
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-img, .card-img-top{
+    aspect-ratio: 1;
+}
+
+.screen {
+    max-width: 500px;
+    height: 5px;
+    background-color: #888;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 20px;
+    margin: 20px auto 80px auto;
+}
+
+.seating-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.seats-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.row-label {
+    position: absolute;
+    right: -20px;
+    color: #bbb;
+    user-select: none;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    background-color: #666;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.aisle {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+}
+
+.space {
+    height: 30px;
+    background-color: transparent;
+}
+
+.regular .seat {
+    background-color: #666;
+}
+
+.standard .seat {
+    background-color: #666;
+}
+
+.platinum .seat {
+    background-color: #666;
+}
+
+.card {
+    max-width: 400px;
+    border-radius: 1rem;
+    background-color: rgba(31, 41, 55, 1);
+    padding: 1rem;
+}
+
+.infos {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    grid-gap: 1rem;
+    gap: 1rem;
+}
+
+.image {
+    height: 7rem;
+    width: 7rem;
+    border-radius: 0.5rem;
+    background-color: rgb(118, 36, 194);
+    background: linear-gradient(to bottom right, rgb(118, 36, 194), rgb(185, 128, 240));
+}
+
+.info {
+    height: 7rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.name {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+}
+
+.function {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(156, 163, 175, 1);
+}
+
+.stats {
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(0, 0, 0, 1);
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 4px;
+}
+
+.state-value {
+    font-weight: 700;
+    color: rgb(118, 36, 194);
+}
+
+.request {
+    margin-top: 1.5rem;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    transition: all .3s ease;
+}
+
+.request:hover {
+    background-color: rgb(118, 36, 194);
+    color: #fff;
+}
+
+.modal-content {
+    background-color: rgba(31, 41, 55, 1);
+}
+
+.price-info{
+    position: absolute;
+    left: 50px;
+    padding: 15px;
+    background: #555;
+    border-radius: 5px;
+}
+
+.seat-number {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    color: #bbb;
+    user-select: none;
+}
+
+#done-button{
+    position: absolute;
+    top: -8px;
+    right: 10px;
+}
+
+.btns-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-content {
+    background-color: rgba(31, 41, 55, 1);
+    color: #fff;
+}
+
+.modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: .3rem;
+}
+
+.table th, .table td {
+    border-top: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: #fff;    
+}
+
+.table td{
+    background-color: rgba(105, 105, 105, 0.5);
+}
+
+
+
+@media screen and (max-width:768px) {
+
+}
+
+@media screen and (max-width:1000px){
+    .price-info{
+        display: none;
+    }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seat Selection - Prathamesh Movie Corner</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+    </nav>
+    <div class="container mt-5">
+      <div id="seat-selection">
+        <div class="price-info">
+          <div class="price-item">(Row: 1-4) Regular: 200 Rs</div>
+          <div class="price-item">(Row: 5-8) Standard: 250 Rs</div>
+          <div class="price-item">(Row: 9) Premium: 400 Rs</div>
+        </div>
+        <div class="screen"></div>
+        <div class="seating-area">
+          <!-- Seats will be injected here by JavaScript -->
+        </div>
+        <button
+          id="book-button"
+          class="btn btn-success mt-3"
+          style="display: none"
+        >
+          Book
+        </button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const seatingArea = document.querySelector(".seating-area");
+        const selectedSeats = new Set();
+        let totalCost = 0;
+
+        function createSeat(row, col, section) {
+          const seat = document.createElement("div");
+          seat.className = "seat";
+          seat.id = `${section}${row}-${col}`;
+          seat.addEventListener("click", () =>
+            toggleSeatSelection(seat, row, col, section)
+          );
+          return seat;
+        }
+
+        function toggleSeatSelection(seat, row, col, section) {
+          const seatId = `${section.toUpperCase()}${row}${col}`;
+          if (selectedSeats.has(seatId)) {
+            selectedSeats.delete(seatId);
+            seat.style.backgroundColor = "#666";
+            updateTotalCost(-getSeatPrice(section));
+          } else {
+            selectedSeats.add(seatId);
+            seat.style.backgroundColor = "#079f07";
+            updateTotalCost(getSeatPrice(section));
+          }
+          updateDoneButtonVisibility();
+        }
+
+        function getSeatPrice(section) {
+          switch (section) {
+            case "r":
+              return 200;
+            case "s":
+              return 250;
+            case "p":
+              return 400;
+            default:
+              return 0;
+          }
+        }
+
+        function updateTotalCost(priceChange) {
+          totalCost += priceChange;
+        }
+
+        function updateDoneButtonVisibility() {
+          const doneButton = document.getElementById("done-button");
+          if (selectedSeats.size > 0) {
+            doneButton.style.display = "block";
+          } else {
+            doneButton.style.display = "none";
+          }
+        }
+
+        function updateSeatSelection() {
+          const seatCount = selectedSeats.size;
+          const availableSeats = 118 - seatCount;
+          const seatList = Array.from(selectedSeats).join(", ");
+          return { seatCount, availableSeats, totalCost, seatList };
+        }
+
+        // Regular seats
+        const regularSection = document.createElement("div");
+        regularSection.className = "seats-section";
+        for (let row = 1; row <= 4; row++) {
+          const seatRow = document.createElement("div");
+          seatRow.className = "row regular";
+          for (let col = 1; col <= 6; col++) {
+            seatRow.appendChild(createSeat(row, col, "r"));
+          }
+          const aisle = document.createElement("div");
+          aisle.className = "aisle";
+          seatRow.appendChild(aisle);
+          for (let col = 1; col <= 6; col++) {
+            seatRow.appendChild(createSeat(row, col, "r"));
+          }
+          const rowLabel = document.createElement("div");
+          rowLabel.className = "row-label";
+          rowLabel.textContent = row;
+          seatRow.appendChild(rowLabel);
+          regularSection.appendChild(seatRow);
+        }
+        seatingArea.appendChild(regularSection);
+
+        // Standard seats
+        const standardSection = document.createElement("div");
+        standardSection.className = "seats-section";
+        for (let row = 5; row <= 8; row++) {
+          const seatRow = document.createElement("div");
+          seatRow.className = "row standard";
+          for (let col = 1; col <= 7; col++) {
+            seatRow.appendChild(createSeat(row - 4, col, "s"));
+          }
+          const aisle = document.createElement("div");
+          aisle.className = "aisle";
+          seatRow.appendChild(aisle);
+          for (let col = 1; col <= 7; col++) {
+            seatRow.appendChild(createSeat(row - 4, col, "s"));
+          }
+          const rowLabel = document.createElement("div");
+          rowLabel.className = "row-label";
+          rowLabel.textContent = row;
+          seatRow.appendChild(rowLabel);
+          standardSection.appendChild(seatRow);
+        }
+        seatingArea.appendChild(standardSection);
+
+        // Platinum seats
+        const platinumSection = document.createElement("div");
+        platinumSection.className = "seats-section";
+
+        // Row of platinum seats
+        const platinumRow = document.createElement("div");
+        platinumRow.className = "row platinum";
+        for (let col = 1; col <= 7; col++) {
+          platinumRow.appendChild(createSeat(1, col, "p"));
+        }
+        const aisle = document.createElement("div");
+        aisle.className = "aisle";
+        platinumRow.appendChild(aisle);
+        for (let col = 1; col <= 7; col++) {
+          platinumRow.appendChild(createSeat(1, col, "p"));
+        }
+        const rowLabel = document.createElement("div");
+        rowLabel.className = "row-label";
+        rowLabel.textContent = "9";
+        platinumRow.appendChild(rowLabel);
+        platinumSection.appendChild(platinumRow);
+
+        // Add seat numbers at the bottom
+        const seatNumbersRow = document.createElement("div");
+        seatNumbersRow.className = "row seat-numbers";
+        for (let col = 1; col <= 7; col++) {
+          const seatNumberLeft = document.createElement("div");
+          seatNumberLeft.className = "seat-number";
+          seatNumberLeft.textContent = col;
+          seatNumbersRow.appendChild(seatNumberLeft);
+        }
+        const aisleSpace = document.createElement("div");
+        aisleSpace.className = "aisle";
+        seatNumbersRow.appendChild(aisleSpace);
+        for (let col = 8; col <= 14; col++) {
+          const seatNumberRight = document.createElement("div");
+          seatNumberRight.className = "seat-number";
+          seatNumberRight.textContent = col;
+          seatNumbersRow.appendChild(seatNumberRight);
+        }
+        platinumSection.appendChild(seatNumbersRow);
+
+        seatingArea.appendChild(platinumSection);
+
+        const doneButton = document.createElement("button");
+        doneButton.id = "done-button";
+        doneButton.className = "btn btn-success mt-3";
+        doneButton.style.display = "none";
+        doneButton.textContent = "Done";
+
+        doneButton.addEventListener("click", () => {
+          const { seatCount, availableSeats, totalCost, seatList } =
+            updateSeatSelection();
+          const selectedMovie = localStorage.getItem("selectedMovie");
+          const selectedTime = localStorage.getItem("selectedTime");
+          localStorage.setItem(
+            "seatDetails",
+            JSON.stringify({
+              seatCount,
+              availableSeats,
+              totalCost,
+              seatList,
+              selectedMovie,
+              selectedTime,
+            })
+          );
+          window.location.href = "final-details.html";
+        });
+
+        document.body.appendChild(doneButton);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prathamesh Movie Corner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+        <div id="user-auth">
+            <button id="login-btn" class="btn btn-primary">Login</button>
+            <button id="signup-btn" class="btn btn-secondary">Sign Up</button>
+        </div>
+        <div id="user-info" class="d-none">
+            <span class="navbar-text" id="username-display"></span>
+            <button id="my-bookings-btn" class="btn btn-secondary ml-2">My Bookings</button>
+            <button id="user-logout-btn" class="btn btn-secondary ml-2">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="container-fluid mt-5 px-5">
+        <div id="movie-grid" class="row">
+            <!-- Movie cards will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <input type="text" class="form-control" id="login-username" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" class="form-control" id="login-password" required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-username">Username</label>
+                            <input type="text" class="form-control" id="signup-username" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" class="form-control" id="signup-email" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" class="form-control" id="signup-password" required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Slot Modal -->
+    <div class="modal fade" id="timeSlotModal" tabindex="-1" aria-labelledby="timeSlotModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="timeSlotModalLabel">Choose a Time Slot</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #fff;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" role="group" aria-label="Time slots">
+                        <button type="button" class="btn btn-outline-primary">9:00 AM</button>
+                        <button type="button" class="btn btn-outline-primary">12:00 PM</button>
+                        <button type="button" class="btn btn-outline-primary">3:00 PM</button>
+                        <button type="button" class="btn btn-outline-primary">6:00 PM</button>
+                        <button type="button" class="btn btn-outline-primary">9:00 PM</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="checkLoginStatus.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (loggedInUser) {
+                document.getElementById("user-auth").classList.add("d-none");
+                document.getElementById("user-info").classList.remove("d-none");
+                document.getElementById("username-display").textContent = `Welcome, ${loggedInUser}`;
+            }
+        });
+    </script>
+    
+
+</body>
+</html>

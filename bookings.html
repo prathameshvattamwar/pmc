@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Prathamesh Movie Corner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+        <div class="btns-box">
+            <button class="btn btn-light" onclick="goHome()">Home</button>
+            <button class="btn btn-light" onclick="goBack()">Back</button>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>My Bookings</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Time</th>
+                    <th>Seats</th>
+                    <th>Total Cost</th>
+                    <th>Payment Method</th>
+                    <th>Date</th>
+                    <th>Action</th> <!-- New column for actions -->
+                </tr>
+            </thead>
+            <tbody id="bookings-table-body">
+                <!-- Booking details will be injected here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                window.location.href = "index.html";
+                return;
+            }
+
+            const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+            const userBookings = bookings.filter(booking => booking.username === loggedInUser);
+            const bookingsTableBody = document.getElementById("bookings-table-body");
+
+            userBookings.forEach((booking, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${booking.movie}</td>
+                    <td>${booking.time}</td>
+                    <td>${booking.seats}</td>
+                    <td>${booking.totalCost}</td>
+                    <td>${booking.paymentMethod}</td>
+                    <td>${booking.date}</td>
+                    <td><button class="btn btn-success" onclick="downloadTicket(${index})">Download My Ticket</button></td>
+                `;
+                bookingsTableBody.appendChild(row);
+            });
+        });
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function downloadTicket(index) {
+            const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+            const booking = bookings[index];
+            const ticketHtml = `
+                <div class="ticket" style="max-width: 600px; padding: 20px; border: 1px solid #000; background-color: #fff; color: #000;">
+                    <div class="ticket-header" style="border-bottom: 2px dashed #000; padding-bottom: 10px; text-align: center; display: flex; justify-content: space-between;">
+                        <h2 style="margin: 0;">Movie Ticket</h2>
+                        <span style="font-size: 24px;">🎟️</span>
+                    </div>
+                    <div class="ticket-body" style="display: flex; justify-content: space-between; padding-top: 10px;">
+                        <div>
+                            <img src="qr.png" alt="QR Code" style="width: 100px; height: 100px;">
+                        </div>
+                        <div>
+                            <div class="ticket-section" style="text-align: left;">
+                                <p class="movie-name" style="font-size: 18px; font-weight: bold;">${booking.movie}</p>
+                                <p class="time-seat" style="margin: 5px 0;">
+                                    <span>Time: ${booking.time}</span><br>
+                                    <span class="seat-no" style="font-weight: bold;">Seat No: ${booking.seats}</span>
+                                </p>
+                                <p class="total-price" style="background-color: #d3d3d3; padding: 5px; border-radius: 5px;">Total Price: ${booking.totalCost} Rs</p>
+                            </div>
+                            <div class="ticket-barcode">
+                                <p class="small-text" style="font-size: 12px; text-align: right;">
+                                    Seats available: 117 | Total seats selected: ${booking.seats.split(',').length}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const ticketElement = document.createElement('div');
+            ticketElement.innerHTML = ticketHtml;
+            document.body.appendChild(ticketElement);
+
+            html2canvas(ticketElement.querySelector('.ticket')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'ticket.png';
+                link.href = canvas.toDataURL();
+                link.click();
+
+                // Remove the ticket element after download
+                document.body.removeChild(ticketElement);
+            });
+        }
+    </script>
+</body>
+</html>

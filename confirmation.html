@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation - Prathamesh Movie Corner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prathamesh Movie Corner</a>
+    </nav>
+    <div class="container mt-5">
+        <h1>Booking Confirmed</h1>
+        <p>Thank you for your purchase! Your booking is confirmed.</p>
+        <button class="btn btn-primary" onclick="goHome()">Home</button>
+    </div>
+    <script>
+        function goHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            }
+        });
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+
+    <script src="checkLoginStatus.js"></script>
+</body>
+</html>
